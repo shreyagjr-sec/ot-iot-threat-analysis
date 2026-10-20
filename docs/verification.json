@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-20",
+  "traffic": "Generated PCAPNG fixtures; no live traffic captured",
+  "input_chunks": 4,
+  "forwarded_chunks": 3,
+  "byte_integrity": "PASS: SHA-256 matches for every forwarded chunk",
+  "acknowledged_sources_removed": true,
+  "newest_chunk_retained": true,
+  "duplicate_upload_status": 409,
+  "invalid_extension_status": 400,
+  "receiver_response": {
+    "status": "success",
+    "filename": "verification-copy.pcapng",
+    "verdict": "NOT_ANALYZED",
+    "message": "File received; AI integration pending"
+  },
+  "analysis": "Not implemented: NOT_ANALYZED is a placeholder"
+}
