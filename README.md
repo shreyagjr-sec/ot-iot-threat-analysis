@@ -60,7 +60,7 @@ For a dependency installation without exact version pins, use `requirements.txt`
 .\.venv\Scripts\python.exe verify_local.py
 ```
 
-Runs the receiver at `127.0.0.1:18765`, generates local fixtures, starts the sender, checks outcomes, writes `docs/verification.json`, and stops its child processes. Raw files/logs remain in an ignored `runtime/` directory. The default test does not require Wireshark or administrator access.
+The verification script runs the receiver at `127.0.0.1:18765`, generates local fixtures, starts the sender, checks outcomes, writes `docs/verification.json`, and stops its child processes. Raw files/logs remain in an ignored `runtime/` directory. The default test does not require Wireshark or administrator access.
 
 ### Run with live capture
 
