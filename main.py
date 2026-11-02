@@ -20,9 +20,11 @@ def analyze_pcap(file: UploadFile = File(...)):
     if not filename or not filename.lower().endswith((".pcap", ".pcapng")):
         raise HTTPException(status_code=400, detail="Expected a .pcap or .pcapng file")
     save_path = RECEIVED_DIR / filename
-    if save_path.exists():
+    try:
+        destination = save_path.open("xb")
+    except FileExistsError:
         raise HTTPException(status_code=409, detail="Filename already exists; manual review required")
-    with save_path.open("wb") as destination:
+    with destination:
         shutil.copyfileobj(file.file, destination)
     return {"status": "success", "filename": filename,
             "verdict": "NOT_ANALYZED", "message": "File received; AI integration pending"}
