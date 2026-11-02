@@ -99,7 +99,7 @@ Optional capture environment variables: `CAPTURE_FILTER` (dumpcap BPF expression
 - No Kafka, flow reassembly, aggregation, threat detection, or AI verdicts.
 - The newest-file heuristic does not prove a file is closed and leaves the final chunk unsent.
 - No authentication, content validation beyond extension, upload limits, quotas, or production durability guarantees.
-- Acknowledgements confirm reception only; ambiguous retries can produce filename conflicts.
+- Acknowledgements confirm reception only. The sender removes a source file only when the response reports success and names that file; ambiguous retries can still produce filename conflicts.
 - Single synchronous sender; latency, throughput, scalability and packet loss are not benchmarked.
 - Intended for local development; do not expose the receiver as a production service.
 
