@@ -31,7 +31,7 @@ def monitor_and_send():
                         timeout=60)
                 response.raise_for_status()
                 result = response.json()
-                if result.get("status") == "success":
+                if result.get("status") == "success" and result.get("filename") == path.name:
                     path.unlink()
                     print(f"Acknowledged and removed {path.name}; {time.monotonic()-started:.2f}s")
                 else:
