@@ -36,6 +36,8 @@ def verify(folder, tshark):
     if len(remaining) != len(expected):
         raise ValueError('Verifier requires unique request ADUs (single demo run)')
     checks = []
+    captured_events = []
+    capture_hash = hashlib.sha256(capture.read_bytes()).hexdigest()
     for stream_id in ids:
         output = command(tshark, '-r', str(capture), '-q', '-z', f'follow,tcp,raw,{stream_id}')
         nodes, data = {}, [bytearray(), bytearray()]
@@ -76,10 +78,14 @@ def verify(folder, tshark):
                        'source': source, 'request_bytes_match': True,
                        'response_bytes_match': True, 'finding': finding,
                        'response_status': status})
+        captured_events.append({'event_id': f'pcap:{capture_hash}:{stream_id}',
+                                'source': source, 'request_hex': request_raw.hex(),
+                                'response_hex': response_raw.hex(),
+                                'evidence_kind': 'packet_capture'})
     if remaining:
         raise AssertionError('Some expected transactions are absent from capture')
     packet_rows = command(tshark, '-r', str(capture), '-T', 'fields', '-e', 'frame.number')
-    report = {'capture_sha256': hashlib.sha256(capture.read_bytes()).hexdigest(),
+    report = {'capture_sha256': capture_hash,
               'packets': len([line for line in packet_rows.splitlines() if line.strip()]),
               'connections_checked': len(checks), 'all_expected_bytes_match': True,
               'policy_results_match': True,
@@ -91,6 +97,8 @@ def verify(folder, tshark):
                               'Not a public-dataset or production performance evaluation'],
               'checks': checks}
     (folder / 'capture-verification.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+    (folder / 'captured-events.jsonl').write_text(
+        ''.join(json.dumps(event) + '\n' for event in captured_events), encoding='utf-8')
     print(json.dumps({key: value for key, value in report.items() if key != 'checks'}, indent=2))
     return report
 

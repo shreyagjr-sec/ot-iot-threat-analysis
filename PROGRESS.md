@@ -1,5 +1,19 @@
 # Progress
 
+## 2026-11-03 — Kafka connected to detection, persistence, and API
+
+- Downloaded Apache Kafka 4.1.2 locally and verified its SHA-512. Installed kafka-python 3.0.12 in the existing virtual environment. No Docker/WSL installation or system Java changes.
+- Ran a real loopback-only KRaft broker using installed Java 26.0.1. Broker binary/data stay in ignored runtime/.
+- Added acknowledged evidence producer, bounded detector worker, result topic, rejection topic, and explicit post-processing offset commits.
+- Connected actual live demo evidence and tshark-reconstructed captured evidence to Kafka, SQLite, and API retrieval.
+- Verified worker interruption after SQLite save and before Kafka acknowledgement; replay did not duplicate the database row.
+- Verified duplicate evidence handling and rejected malformed JSON/conflicting evidence routing.
+- Added repeatable setup, verification, manual run commands, and two streaming validation tests (18 total passing at initial integration).
+- Refer to docs/KAFKA.md for commands, exact delivery semantics, limitations, and reproducibility.
+- Final end-to-end verification: 14 new live events plus 14 saved-capture transactions produced 28 unique findings visible through the API. Including duplicate/conflict/malformed test inputs, all 31 input offsets were processed; result topic held 29 records (one intentional duplicate), and rejection topic held two records.
+- Final run evidence: runtime/kafka-check-9bf75a4e7752/verification.json; publishable copy in docs/evidence/kafka/verification.json. All 18 code tests passed.
+- Still pending: general PCAP ingestion/live capture streaming, LLM explanations, dashboard, public datasets, and research benchmarks.
+
 ## 2026-11-03 — User-run live capture independently checked
 
 - User successfully ran the elevated dumpcap demo. The previous Npcap privilege blocker is resolved for elevated user-run capture.

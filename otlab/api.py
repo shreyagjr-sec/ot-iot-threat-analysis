@@ -1,6 +1,7 @@
 """Local evidence analysis API. Run bound to 127.0.0.1 only.
 
-This endpoint accepts instrumented evidence, not PCAP uploads. No LLM or Kafka yet.
+Accepts normalized evidence over HTTP and exposes findings saved by the Kafka worker.
+Raw PCAP upload/ingestion and LLM explanations are separate features.
 """
 import json
 import os
@@ -26,12 +27,14 @@ def create_app(database=None, policy_path=None):
     policy_path = policy_path or root / 'config/conveyor-policy.json'
     policy = validate(json.loads(Path(policy_path).read_text()))
     store = Store(database or os.environ.get('OTLAB_DB', str(root / 'runtime/findings.sqlite3')), policy)
-    app = FastAPI(title='OT Lab — Modbus policy evidence', version='0.2.0')
+    app = FastAPI(title='OT Lab — Modbus policy evidence', version='0.3.0')
 
     @app.get('/health')
     def health():
         return {'status': 'ready', 'detection': 'policy_rules', 'ai': 'not_implemented',
-                'transport': 'direct_http', 'storage': 'sqlite'}
+                'transport': 'direct_http', 'storage': 'sqlite',
+                'supported_ingestion_paths': ['direct_http', 'kafka_worker'],
+                'broker_health': 'not_checked_by_this_endpoint'}
 
     @app.post('/events')
     def ingest(evidence: Evidence):

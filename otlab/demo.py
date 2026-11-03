@@ -35,7 +35,7 @@ CASES = [
 ]
 
 
-def run(output, repeats=1, capture_tool=None):
+def run(output, repeats=1, capture_tool=None, on_event=None):
     root = Path(__file__).resolve().parents[1]
     policy_path = root / 'config/conveyor-policy.json'
     policy_bytes = policy_path.read_bytes()
@@ -94,6 +94,8 @@ def run(output, repeats=1, capture_tool=None):
                                    expected_violation=expected, response_status=outcome,
                                    finding=finding, rule_processing_us=rule_us,
                                    request_response_and_rule_us=roundtrip_us))
+                if on_event:
+                    on_event(events[-1])
         scored = [e for e in events if e['expected_violation'] is not None]
         tp = sum(e['expected_violation'] and e['finding']['verdict'] == 'policy_violation' for e in scored)
         fp = sum(not e['expected_violation'] and e['finding']['verdict'] == 'policy_violation' for e in scored)
@@ -116,7 +118,8 @@ def run(output, repeats=1, capture_tool=None):
                        request_response_and_rule_us=percentiles('request_response_and_rule_us'),
                        traffic='Actual loopback TCP; application-instrumented, not packet-captured',
                        limitations=['Hand-authored lab cases, not independent public-dataset validation',
-                                    'No Kafka, PCAP parser, LLM, or production latency measurement',
+                                    ('External event sink enabled; delivery validated separately' if on_event else
+                                     'Standalone demo: no Kafka, PCAP parser, LLM, or production latency measurement'),
                                     'Acknowledgement proves protocol acceptance, not physical actuation',
                                     'Source IP allowlist is not authentication'])
         if capture:

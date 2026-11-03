@@ -1,0 +1,28 @@
+{
+  "broker": "Apache Kafka 4.1.2, single-node KRaft, IPv4 loopback",
+  "client": "kafka-python 3.0.12",
+  "live_modbus_events_published": 14,
+  "recovery_test_input_records": 17,
+  "total_input_records": 31,
+  "consumer_recovery": {
+    "processed": 17,
+    "created": 13,
+    "duplicates": 2,
+    "rejected": 2
+  },
+  "fault_injection": "stopped after SQLite commit before result publication and offset commit",
+  "recovery_preserved_unique_findings": 14,
+  "kafka_result_records": 29,
+  "rejected_records": 2,
+  "committed_input_offset": 31,
+  "api_findings_returned": 28,
+  "policy_matches_demo": true,
+  "captured_transactions_published_and_saved": 14,
+  "delivery": "at-least-once; SQLite deduplicates, Kafka results may repeat",
+  "limitations": [
+    "Capture reconstruction supports bounded demo only, not arbitrary PCAP ingestion",
+    "Single local broker, no high availability",
+    "Controlled worker failure, not power-loss durability validation",
+    "No LLM, public dataset, or throughput benchmark yet"
+  ]
+}

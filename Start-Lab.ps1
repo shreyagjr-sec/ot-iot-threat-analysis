@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('demo', 'api', 'verify', 'tests')]
+    [ValidateSet('demo', 'api', 'verify', 'tests', 'kafka-verify', 'broker')]
     [string]$Mode = 'demo'
 )
 $ErrorActionPreference = 'Stop'
@@ -18,5 +18,7 @@ switch ($Mode) {
     'api' { & $labPython -m uvicorn otlab.api:create_app --factory --host 127.0.0.1 --port 8001 }
     'verify' { & $labPython verify_api.py }
     'tests' { & $labPython -m unittest discover -s tests -v }
+    'kafka-verify' { & $labPython verify_kafka.py }
+    'broker' { & $labPython -m otlab.broker }
 }
 if ($LASTEXITCODE -ne 0) { throw "Lab command failed with exit code $LASTEXITCODE" }

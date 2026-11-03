@@ -2,6 +2,14 @@
 
 Active folder: `E:\Ot IoT Security Project\repository`.
 
+Kafka integration is available. For a complete broker-to-detector-to-database-to-API check, run:
+
+```powershell
+& '..\.venv\Scripts\python.exe' verify_kafka.py
+```
+
+See [Kafka instructions](KAFKA.md) for component-by-component commands and fresh installation. Streaming dependencies are installed on this laptop; new environments need requirements-streaming.txt.
+
 Open PowerShell in this folder. The launcher prefers a repository-local virtual environment, then the pre-existing parent environment. Nothing installs automatically.
 
 ```powershell
@@ -11,7 +19,7 @@ Open PowerShell in this folder. The launcher prefers a repository-local virtual 
 ```
 
 - demo: 14 actual loopback Modbus TCP transactions; saves request/response evidence and policy results.
-- tests: protocol and storage tests (16 tests at this milestone).
+- tests: protocol, storage, and streaming message tests (18 tests at this milestone).
 - verify: full demo followed by real HTTP ingestion, duplicate/conflict checks, and API restart/persistence verification. Uses an isolated runtime database.
 
 If PowerShell blocks scripts, invoke Python directly instead of changing global execution policy:
@@ -51,4 +59,4 @@ The verifier reconstructs directional TCP streams using tshark and compares sour
 
 ## Still to build
 
-Kafka deployment and consumer delivery; independent PCAP parsing/validation; public-dataset selection; AI explanations; dashboard; resource/load experiments; final IEEE report. Docker and WSL2 are not installed by these scripts.
+General PCAP ingestion/live capture streaming; public-dataset selection; AI explanations; dashboard; resource/load experiments; final IEEE report. Kafka transport and the bounded captured-demo adapter are implemented. Docker and WSL2 are not installed by these scripts.

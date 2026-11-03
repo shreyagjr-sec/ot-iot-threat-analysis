@@ -1,5 +1,7 @@
 # OT/IoT Security Pipeline — Conveyor Research Prototype
 
+**Kafka is connected:** real local Kafka carries live demo evidence and reconstructed captured evidence into the policy detector, SQLite, and API. Recovery after an interrupted worker, duplicate handling, and rejection routing are verified. Run `python verify_kafka.py` from the configured environment. See [Kafka setup and run instructions](docs/KAFKA.md) and [progress](PROGRESS.md). The earlier milestone below describes the pre-Kafka baseline.
+
 **Current milestone (2026-11-03):** a loopback-only Python Modbus conveyor simulator, independent policy detector, local FastAPI evidence analysis, SQLite persistence, and 16 passing tests. Verified 14 live transactions through the analysis API, idempotent retries, conflicting-evidence rejection, and persistence after API restart. An elevated user-run capture produced 180 packets; tshark reconstruction confirmed all 14 request/response byte sequences and source addresses. See [run locally](docs/RUN-LOCALLY.md), [capture verification](docs/evidence/capture-validation.json), [initial experiment](docs/MILESTONE-1.md), [project plan](docs/PROJECT-PLAN.md), and [progress](PROGRESS.md). Kafka, general passive PCAP ingestion, dashboard, and LLM explanations remain pending. The old HTTP capture baseline below remains separate.
 
 ## Original HTTP capture baseline
