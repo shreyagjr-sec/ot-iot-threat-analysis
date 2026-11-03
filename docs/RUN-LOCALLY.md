@@ -33,15 +33,21 @@ Evidence ingestion recomputes decisions from request bytes and the configured po
 
 SQLite findings are under runtime/findings.sqlite3 by default. Run folders, logs, captures, and databases remain local and ignored by Git. This API has no authentication; bind only to loopback. It accepts bounded single-transaction hex evidence, not PCAP files. The older main:app receiver is a separate baseline and still returns NOT_ANALYZED.
 
-## Live packet capture (currently blocked)
+## Live packet capture (verified with elevated user run)
 
-The capture attempt failed because this machine's Npcap requires administrator privileges. No Npcap configuration was changed. From an elevated PowerShell, the optional loopback-only check is:
+Npcap on this machine requires administrator privileges. An elevated user run succeeded and its capture was verified. No Npcap configuration was changed. From an elevated PowerShell, the loopback-only check is:
 
 ```powershell
 & '..\.venv\Scripts\python.exe' -m otlab.demo --capture-tool 'E:\Wireshark\dumpcap.exe' --output runtime/capture-validation
 ```
 
-This starts a six-second capture filtered to the demo's random loopback port. A successful capture still needs independent tshark validation; packet analysis is not implemented yet. Do not describe the current application evidence as packet-capture evidence.
+This starts a six-second capture filtered to the demo's random loopback port. Captured packet timestamps span only the active traffic interval, which can be much shorter than six seconds. Then verify the saved capture (administrator access is not needed for this step):
+
+```powershell
+& '..\.venv\Scripts\python.exe' verify_capture.py
+```
+
+The verifier reconstructs directional TCP streams using tshark and compares source addresses and request/response bytes with the application evidence. It supports exactly one request/response per connection and one demo run. The verified run contained 180 packets and all 14 expected transactions. This is a bounded capture verifier, not a general PCAP ingestion worker.
 
 ## Still to build
 

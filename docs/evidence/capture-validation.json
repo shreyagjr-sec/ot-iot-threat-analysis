@@ -1,0 +1,260 @@
+{
+  "capture_sha256": "aa6bde815a201422bf3284124644871d54d0e07ad430e265b6a3cccef567d592",
+  "packets": 180,
+  "connections_checked": 14,
+  "all_expected_bytes_match": true,
+  "policy_results_match": true,
+  "reassembly": "Wireshark tshark follow,tcp,raw; ordered directional stream bytes",
+  "tshark_version": "TShark (Wireshark) 4.6.8 (v4.6.8-0-ge677bf052328).",
+  "limitations": [
+    "Bounded demo verifier, not general PCAP ingestion",
+    "One transaction per TCP connection",
+    "Policy classification uses the same detector; ground truth remains authored lab cases",
+    "Not a public-dataset or production performance evaluation"
+  ],
+  "checks": [
+    {
+      "case": "normal_start",
+      "tcp_stream": 0,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "allowed_write",
+        "reasons": [],
+        "violations": []
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "normal_speed",
+      "tcp_stream": 1,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "allowed_write",
+        "reasons": [],
+        "violations": []
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "lower_boundary",
+      "tcp_stream": 2,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "allowed_write",
+        "reasons": [],
+        "violations": []
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "upper_boundary",
+      "tcp_stream": 3,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "allowed_write",
+        "reasons": [],
+        "violations": []
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "unapproved_source",
+      "tcp_stream": 4,
+      "source": "127.0.0.3",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "policy_violation",
+        "reasons": [
+          "unapproved_source"
+        ],
+        "violations": []
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "excess_speed",
+      "tcp_stream": 5,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "policy_violation",
+        "reasons": [
+          "out_of_range"
+        ],
+        "violations": [
+          {
+            "address": 1,
+            "value": 101,
+            "allowed": [
+              0,
+              100
+            ],
+            "reason": "out_of_range"
+          }
+        ]
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "invalid_run_command",
+      "tcp_stream": 6,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "policy_violation",
+        "reasons": [
+          "out_of_range"
+        ],
+        "violations": [
+          {
+            "address": 0,
+            "value": 2,
+            "allowed": [
+              0,
+              1
+            ],
+            "reason": "out_of_range"
+          }
+        ]
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "combined_violation",
+      "tcp_stream": 7,
+      "source": "127.0.0.3",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "policy_violation",
+        "reasons": [
+          "unapproved_source",
+          "out_of_range"
+        ],
+        "violations": [
+          {
+            "address": 1,
+            "value": 200,
+            "allowed": [
+              0,
+              100
+            ],
+            "reason": "out_of_range"
+          }
+        ]
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "valid_multiple",
+      "tcp_stream": 8,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "allowed_write",
+        "reasons": [],
+        "violations": []
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "invalid_multiple",
+      "tcp_stream": 9,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "policy_violation",
+        "reasons": [
+          "out_of_range"
+        ],
+        "violations": [
+          {
+            "address": 1,
+            "value": 200,
+            "allowed": [
+              0,
+              100
+            ],
+            "reason": "out_of_range"
+          }
+        ]
+      },
+      "response_status": "acknowledged"
+    },
+    {
+      "case": "read_only_register_write",
+      "tcp_stream": 10,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "policy_violation",
+        "reasons": [
+          "register_not_allowed"
+        ],
+        "violations": [
+          {
+            "address": 2,
+            "value": 1,
+            "reason": "register_not_allowed"
+          }
+        ]
+      },
+      "response_status": "server_exception"
+    },
+    {
+      "case": "normal_read",
+      "tcp_stream": 11,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "not_a_write",
+        "reasons": [],
+        "violations": []
+      },
+      "response_status": "read_response"
+    },
+    {
+      "case": "unconfigured_unit",
+      "tcp_stream": 12,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "unassessed",
+        "reasons": [
+          "unit_not_configured"
+        ],
+        "violations": []
+      },
+      "response_status": "server_exception"
+    },
+    {
+      "case": "normal_stop",
+      "tcp_stream": 13,
+      "source": "127.0.0.2",
+      "request_bytes_match": true,
+      "response_bytes_match": true,
+      "finding": {
+        "verdict": "allowed_write",
+        "reasons": [],
+        "violations": []
+      },
+      "response_status": "acknowledged"
+    }
+  ]
+}

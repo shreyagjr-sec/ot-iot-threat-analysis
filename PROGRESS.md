@@ -1,5 +1,16 @@
 # Progress
 
+## 2026-11-03 — User-run live capture independently checked
+
+- User successfully ran the elevated dumpcap demo. The previous Npcap privilege blocker is resolved for elevated user-run capture.
+- Inspected the actual PCAPNG: 180 packets; dumpcap reports 180 received and zero dropped.
+- Added verify_capture.py using tshark TCP stream reconstruction, including requests split over TCP segments.
+- Verified all 14 captured connections: source addresses, complete request bytes, and complete response bytes match the application evidence exactly. Recomputed policy classifications also match.
+- Capture SHA-256: aa6bde815a201422bf3284124644871d54d0e07ad430e265b6a3cccef567d592.
+- All 16 existing tests pass after this addition.
+- Local raw evidence: runtime/capture-validation/. Publishable verification report: docs/evidence/capture-validation.json.
+- Limitation: this validates a bounded one-transaction-per-connection demo; a general PCAP ingestion worker, Kafka, and AI explanations remain pending.
+
 ## 2026-11-03 — E: integration and persistent analysis API
 
 Completed and verified directly in E:\Ot IoT Security Project\repository:
