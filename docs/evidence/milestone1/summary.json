@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-11-03T17:42:12.547951+00:00",
+  "python": "3.13.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "policy_sha256": "78f124b4365dfa4c409cf63bc4fb9989db6163506c89b9571687f8aa39e73b00",
+  "events": 14,
+  "scored_events": 12,
+  "excluded_events": 2,
+  "confusion_matrix": {
+    "tp": 6,
+    "fp": 0,
+    "fn": 0,
+    "tn": 6
+  },
+  "precision": 1.0,
+  "recall": 1.0,
+  "false_positive_rate": 0.0,
+  "rule_processing_us": {
+    "p50": 25.0,
+    "p95": 61.7
+  },
+  "request_response_and_rule_us": {
+    "p50": 1117.5,
+    "p95": 2078.2
+  },
+  "traffic": "Actual loopback TCP; application-instrumented, not packet-captured",
+  "limitations": [
+    "Hand-authored lab cases, not independent public-dataset validation",
+    "No Kafka, PCAP parser, LLM, or production latency measurement",
+    "Acknowledgement proves protocol acceptance, not physical actuation",
+    "Source IP allowlist is not authentication"
+  ]
+}

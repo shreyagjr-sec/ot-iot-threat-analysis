@@ -1,0 +1,11 @@
+{
+  "events_analyzed": 14,
+  "policy_results_match_live_demo": true,
+  "duplicate_created": false,
+  "conflicting_event_status": 409,
+  "invalid_evidence_status": 422,
+  "persisted_after_restart": 14,
+  "transport": "actual HTTP on IPv4 loopback",
+  "ai": "not implemented",
+  "capture": "application evidence only; Npcap capture needs elevation"
+}

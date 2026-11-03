@@ -1,4 +1,8 @@
-# OT/IoT Security Pipeline — Baseline V1
+# OT/IoT Security Pipeline — Conveyor Research Prototype
+
+**Current milestone (2026-11-03):** a loopback-only Python Modbus conveyor simulator, independent policy detector, local FastAPI evidence analysis, SQLite persistence, and 16 passing tests. Verified 14 live transactions through the analysis API, idempotent retries, conflicting-evidence rejection, and persistence after API restart. See [run locally](docs/RUN-LOCALLY.md), [initial experiment](docs/MILESTONE-1.md), [project plan](docs/PROJECT-PLAN.md), and [progress](PROGRESS.md). Kafka, passive PCAP analysis, dashboard, and LLM explanations remain pending. Npcap live capture was attempted but requires administrator privileges. The old HTTP capture baseline below remains separate.
+
+## Original HTTP capture baseline
 
 A Python prototype for time-windowed PCAPNG capture, buffered HTTP forwarding, and local file reception. This is the first stage of an OT/IoT security-monitoring architecture.
 
