@@ -23,7 +23,7 @@ authorized interface -> dumpcap -> rotating PCAPNG files
 
 The architecture reference supplied during development describes a future target. It is not included as implementation evidence.
 
-## Verified local execution
+## Verified HTTP capture baseline execution
 
 On October 20, 2026, the receiver and sender were run on Windows with Python 3.13 using generated Ethernet/IPv4/UDP PCAPNG fixtures. No personal network traffic is included in this repository.
 
@@ -41,7 +41,7 @@ These are headless-browser screenshots of a report generated from the actual tes
 
 ![Actual receiver response](docs/receiver-response.png)
 
-## Files
+## HTTP capture baseline files
 
 | File | Purpose |
 |---|---|
@@ -51,7 +51,7 @@ These are headless-browser screenshots of a report generated from the actual tes
 | `verify_local.py` | Exercise receiver/sender using generated fixtures, or bounded loopback capture with `--live` |
 | `requirements-lock.txt` | Exact dependency versions used for this verification |
 
-## Setup
+## HTTP capture baseline setup
 
 ```powershell
 py -3.13 -m venv .venv
@@ -99,7 +99,7 @@ Receiver readiness: `http://127.0.0.1:8000/`. API documentation: `http://127.0.0
 
 Optional capture environment variables: `CAPTURE_FILTER` (dumpcap BPF expression) and `CAPTURE_DURATION_SECONDS` (stop after a bounded interval). The bounded `verify_local.py --live` check uses interface 1 and local TCP port 18765; verify interface 1 is loopback before running it. If Npcap is installed in administrator-only mode, live capture requires appropriate permissions.
 
-## Limitations
+## HTTP capture baseline limitations
 
 - File-based micro-batching, not packet-by-packet broker streaming.
 - No Kafka, flow reassembly, aggregation, threat detection, or AI verdicts.
@@ -109,6 +109,6 @@ Optional capture environment variables: `CAPTURE_FILTER` (dumpcap BPF expression
 - Single synchronous sender; latency, throughput, scalability and packet loss are not benchmarked.
 - Intended for local development; do not expose the receiver as a production service.
 
-## Next milestone
+## HTTP capture baseline next steps
 
 Introduce durable transport and idempotent delivery, replace the file-closure heuristic, implement flow-aware aggregation, and measure backlog, latency and resource use before adding analysis workers.
